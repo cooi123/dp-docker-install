@@ -2,6 +2,21 @@
 
 ## Prerequisites
 
+### Verify Docker or Podman Installation
+
+Ensure that either Docker or Podman is installed on your system. You can verify the installation by running one of the following commands:
+
+**For Docker:**
+```bash
+docker --version
+```
+
+**For Podman:**
+```bash
+podman --version
+```
+
+If neither command returns a version number, you'll need to install Docker or Podman before proceeding.
 ### Retrieve Available Image Tags
 
 To retrieve the available image tags:
