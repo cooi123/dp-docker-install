@@ -27,6 +27,27 @@ skopeo list-tags --creds "cp:${ENTITLEMENT_KEY}" docker://cp.icr.io/cp/datapower
 
 Find the image location for different versions here: [IBM DataPower Operator Documentation](https://www.ibm.com/docs/en/datapower-operator/1.17.0?topic=features-entitled-registry)
 
+### Upload Image to Mirror Registry (Air Gap Installation)
+
+For air gap installations, you'll need to copy the DataPower image to your mirror registry. Using `skopeo` is the most efficient method as it copies images directly between registries without requiring local storage.
+
+**Copy image to mirror registry using skopeo:**
+
+```bash
+skopeo copy \
+  --src-creds "cp:${ENTITLEMENT_KEY}" \
+  --dest-creds "${MIRROR_USERNAME}:${MIRROR_PASSWORD}" \
+  docker://cp.icr.io/cp/datapower/datapower-prod:10.5.4.0 \
+  docker://${MIRROR_REGISTRY}/datapower-prod:10.5.4.0
+```
+
+**Note:** 
+- Replace `${MIRROR_REGISTRY}`, `${MIRROR_USERNAME}`, and `${MIRROR_PASSWORD}` with your actual mirror registry details, or export them as environment variables.
+- Replace `10.5.4.0` with the version tag you want to copy.
+- Ensure `skopeo` is installed on your system. You can verify by running `skopeo --version`.
+
+After copying, you can use the image from your mirror registry by replacing `cp.icr.io/cp/datapower/datapower-prod:10.5.4.0` with `${MIRROR_REGISTRY}/datapower-prod:10.5.4.0` in the run commands below.
+
 ### Differences Between DataPower Products
 
 For information about differences between DataPower products, see: [DataPower Product Differences](https://www.ibm.com/docs/en/datapower-gateway/10.6.0?topic=overview-differences-among-datapower-products)
